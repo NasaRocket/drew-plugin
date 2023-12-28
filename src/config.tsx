@@ -5,6 +5,7 @@ import { Editor, getSvgAsImage } from '@tldraw/tldraw';
 import { bitable, FieldType, IAttachmentField, ToastType } from '@lark-base-open/js-sdk';
 import { ExportFileType, FileTypeTip } from './const';
 import { getWord, LangKey } from './i18n';
+import { isJsonFile } from './utils';
 
 export enum ModalType {
   import = 'import',
@@ -113,7 +114,10 @@ export class ConfigModal extends React.Component<ConfigModalProps, ConfigModalSt
     }
     this.setState({
       loadingFile: false,
-      fileOptionsList: attachmentFileList.map(((file, index) => ({ value: index, label: file.name })) || []),
+      fileOptionsList: attachmentFileList.map(((file, index) => ({
+        value: index,
+        label: file.name
+      })) || []).filter(item => isJsonFile(item.label)),
     })
   }
 
